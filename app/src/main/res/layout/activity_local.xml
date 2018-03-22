@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.andre.eventmanager.LocalActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/nombre_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lemon Trip"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="35dp"
+            />
+        <ImageView
+            android:id="@+id/imagen_local"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/nombre_local"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/info_local"
+            android:layout_below="@+id/imagen_local"
+            android:paddingTop="1dp">
+            <ImageView
+                android:id="@+id/icon1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/location"
+                android:scaleType="center"
+                />
+            <TextView
+                android:id="@+id/direccion_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Av. Ivar Riofrio y Martin Ayuy"
+                android:layout_toRightOf="@+id/icon1"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearance"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_local_2"
+            android:layout_below="@+id/info_local">
+            <ImageView
+                android:id="@+id/icon_local_2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/avatar"
+                android:scaleType="center"
+                />
+
+            <TextView
+                android:id="@+id/nombre_propietario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/icon_local_2"
+                android:paddingLeft="5dp"
+                android:text="Pedro PicaPiedra"
+                android:textAppearance="?android:attr/textAppearance"
+
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_local_3"
+            android:layout_below="@+id/info_local_2">
+            <ImageView
+                android:id="@+id/icon_local_3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/phone"
+                android:scaleType="center"
+                />
+
+            <TextView
+                android:id="@+id/telefono_local"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0967561342"
+                android:layout_toEndOf="@+id/icon_local_3"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearance"
+
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_local_4"
+            android:layout_below="@+id/info_local_3">
+
+            <ImageView
+                android:id="@+id/icon_local_4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/cellphone"
+                android:scaleType="center"
+                />
+
+            <TextView
+                android:id="@+id/celular_local"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2300094"
+                android:layout_toEndOf="@+id/icon_local_4"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearance"
+
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_local_5"
+            android:layout_below="@+id/info_local_4">
+
+            <ImageView
+                android:id="@+id/icon_local_5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/mail"
+                android:scaleType="center"
+                />
+
+            <TextView
+                android:id="@+id/email_local"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test@example.com"
+                android:layout_toEndOf="@+id/icon_local_5"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearance"
+                android:paddingBottom="10dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

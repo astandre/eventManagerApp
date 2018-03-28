@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <!-- your theme inherits from the material theme -->
     <style name="MaterialTheme" parent="android:Theme.Material">
@@ -17,6 +19,7 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -25,6 +28,7 @@
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+
     </style>
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">

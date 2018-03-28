@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">EventManager</string>
-
+    <string name="app_name">FarrasEC</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="menu_about">Acerca de</string>
 </resources>

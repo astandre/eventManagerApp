@@ -1,19 +1,26 @@
 package com.example.andre.eventmanager;
 
+import android.app.Fragment;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +46,6 @@ public class MainAcivity extends AppCompatActivity {
     private static RecyclerView recycler;
     private static RecyclerView.Adapter adapter;
     private  RecyclerView.LayoutManager lManager;
-
-    private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
     ArrayList<Evento> lstEventos = new ArrayList<>() ;
     public String url;
     private static SwipeRefreshLayout swiperefresh;
@@ -51,6 +54,9 @@ public class MainAcivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("FNC", "Launching Event list");
+//Tool bar
+
+
 //        TODO onclick categoria
 //        url
         url = "http://" + Constants.BASE_URL + "/api/events/";
@@ -76,7 +82,6 @@ public class MainAcivity extends AppCompatActivity {
                 }
         );
     }
-
     void run() throws IOException {
         Log.d("FNC","Attempting to get data");
         OkHttpClient client = new OkHttpClient();

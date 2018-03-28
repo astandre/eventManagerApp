@@ -31,7 +31,6 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         url = "http://" + Constants.BASE_URL + "/api/events/";
-//        Log.d("url", url);
         try {
 
             run();

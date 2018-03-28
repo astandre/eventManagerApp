@@ -21,7 +21,8 @@
         <activity android:name=".MainAcivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".imageActivity" />
-        <activity android:name=".LocalActivity"></activity>
+        <activity android:name=".LocalActivity" />
+        <activity android:name=".AboutAcivity"></activity>
     </application>
 
 </manifest>

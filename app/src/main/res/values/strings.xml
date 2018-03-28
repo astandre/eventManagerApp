@@ -4,4 +4,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="menu_about">Acerca de</string>
+    <string name="version">Beta V 0.1</string>
+    <!--TODO: Terminar redaccion del acerca de-->
+    <string name="about">FarrasEC, es la mejor opcion para estar enterado de los eventos que suceden en tu ciudad. beta 0.1</string>
+
+
 </resources>

@@ -1,14 +1,20 @@
 package com.example.andre.eventmanager.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by andre on 23/10/2017.
  */
 
-public class Evento implements java.io.Serializable {
+public class Evento implements Serializable/*,Parcelable*/{
     private int cod_evento;
     private String nombre;
     private String descripcion;
@@ -25,6 +31,69 @@ public class Evento implements java.io.Serializable {
     public Evento(){
 
     }
+    public Evento(int cod_evento, String nombre ){
+        this.cod_evento = cod_evento;
+        this.nombre = nombre;
+    }
+    public Evento (Parcel in){
+        readFromParcel(in);
+    }
+//    public Evento(Parcel source){
+//        cod_evento=  source.readInt();
+//                this.id = data[0];
+//        nombre = source.readString();
+//        descripcion = source.readString();
+//        direccion = source.readString();
+//        latitud_evento = source.readString();
+//        longitud_evento = source.readString();
+//        img = source.readString();
+
+//        this.longitud_evento = data[5];
+//        this.fecha_inicio = new SimpleDateFormat(data[6],
+//                        new Locale("es", "ES"))
+//                        .format(lstEventos.get(position).getFecha_inicio())
+//                        .toUpperCase()
+//                        .replace(".", ""));
+//        this.fecha_fin = data[7];
+//        this.familiar = data[8];
+//        this.local=data[10];
+//        this.categorias = data[11];
+//            }
+//
+//    @Override
+//       public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(cod_evento);
+//        dest.writeString(nombre);
+////        dest.writeString(descripcion);
+////        dest.writeString(latitud_evento);
+////        dest.writeString(longitud_evento);
+//////       dest.writeBooleanArray(familiar);
+////       dest.writeString(img);
+////       dest.writeIntArray(categorias);
+//
+//           }
+    private void readFromParcel(Parcel in) {
+        cod_evento = in.readInt();
+        nombre = in.readString();
+
+    }
+
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//    public static final Creator<Evento> CREATOR = new Creator<Evento>() {
+//        @Override
+//        public Evento[] newArray(int size) {
+//            return new Evento[size];
+//        }
+//
+//        @Override
+//        public Evento createFromParcel(Parcel source) {
+//            return new Evento(source);
+//        }
+//    };
+
     public Evento(int cod_evento, String nombre, String descripcion,String direccion, String latitud_evento,String longitud_evento, Date fecha_inicio, Date fecha_fin  , Boolean familiar, String img, Local local,int[] categorias) {
         super();
         this.cod_evento = cod_evento;

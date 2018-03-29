@@ -4,9 +4,10 @@ package com.example.andre.eventmanager.model;
  * Created by andre on 23/10/2017.
  */
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Local implements java.io.Serializable{
+
+public class Local implements Serializable{
     private int id_local;
     private String nombre;
     private String direccion;
@@ -17,15 +18,15 @@ public class Local implements java.io.Serializable{
     private String celular;
     private String email;
     private String img_local;
-//    private ArrayList<Evento> lstEventos;
 
-    public Local(int id_local, String nombre, String direccion,String latitud_local, String longitud_local, String propietario, String telefono, String celular, String email,String img_local) {
+
+    public Local(int id_local, String nombre, String direccion,String latitud_local, String longitud_local, String telefono, String celular, String email,String img_local) {
         this.id_local = id_local;
         this.nombre = nombre;
         this.direccion = direccion;
         this.latitud_local = latitud_local;
         this.longitud_local = longitud_local;
-        this.propietario = propietario;
+//        this.propietario = propietario;
         this.telefono = telefono;
         this.celular = celular;
         this.email = email;

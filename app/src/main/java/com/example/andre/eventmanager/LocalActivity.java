@@ -26,7 +26,7 @@ public class LocalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_local);
         TextView nombre_local = (TextView) findViewById(R.id.nombre_local);
         TextView direccion_local = (TextView) findViewById(R.id.direccion_local);
-        TextView nombre_propietario = (TextView) findViewById(R.id.nombre_propietario);
+//        TextView nombre_propietario = (TextView) findViewById(R.id.nombre_propietario);
         TextView telefono_local = (TextView) findViewById(R.id.telefono_local);
         TextView celular_local = (TextView) findViewById(R.id.celular_local);
         TextView email_local = (TextView) findViewById(R.id.email_local);
@@ -35,7 +35,7 @@ public class LocalActivity extends AppCompatActivity {
 
         nombre_local.setText(objLocal.getNombre());
         direccion_local.setText(objLocal.getDireccion());
-        nombre_propietario.setText(objLocal.getPropietario());
+//        nombre_propietario.setText(objLocal.getPropietario());
         telefono_local.setText(objLocal.getTelefono());
         celular_local.setText(objLocal.getCelular());
         email_local.setText(objLocal.getEmail());
@@ -90,6 +90,7 @@ public class LocalActivity extends AppCompatActivity {
         });
 //        TODO añadir la funcion de mapa
 //        TODO add interaccion on click
+//        TODO futuros eventos
 
 
 

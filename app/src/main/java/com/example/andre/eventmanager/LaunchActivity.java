@@ -6,10 +6,12 @@ import android.os.Bundle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.util.Log;
 
 import com.example.andre.eventmanager.model.Evento;
+import com.example.andre.eventmanager.model.Local;
 import com.example.andre.eventmanager.parsers.EventParser;
 
 import okhttp3.Call;
@@ -27,10 +29,17 @@ public class LaunchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+// for Demo Only
+//        for (int i =0; i < 8;i++){
+//            Local objLocal = new Local(i,"Local "+i,"Direccion "+i,"000","000","Dueño "+i, "2300064", "0967561342", "email@test.com","img.jpg");
+//            int [] categorias = {1,2,3};
+//            Evento objEvento = new Evento(i,"Evento "+i,"Descripcion del evento","ubicacion del evento","0000","000", new Date(), new Date(), true, "img.jpg", objLocal, categorias);
+//            lstEventos.add(objEvento);
+//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-        url = "http://" + Constants.BASE_URL + "/api/events/";
+        url = "http://" + Constants.BASE_URL + "/api/eventos/";
 //        Intent intent = new Intent(LaunchActivity.this, MainAcivity.class);
 //        intent.putExtra("lstEventos", lstEventos); //Optional parameters
 //        LaunchActivity.this.startActivity(intent);

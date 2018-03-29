@@ -54,12 +54,12 @@ public class EventParser {
                 String direccion_local = localAux.getString("direccion_local");
                 String latitud_local = localAux.getString("latitud_local");
                 String longitud_local = localAux.getString("longitud_local");
-                String nombre_propietario = localAux.getString("nombre_propietario");
+//                String nombre_propietario = localAux.getString("nombre_propietario");
                 String telefono_local = localAux.getString("telefono_local");
                 String celular_local = localAux.getString("celular_local");
                 String email_local = localAux.getString("email_local");
                 String img_local = localAux.getString("img_local");
-                Local local = new Local(cod_local, nombre_local, direccion_local,latitud_local,longitud_local, nombre_propietario, telefono_local, celular_local, email_local,img_local);
+                Local local = new Local(cod_local, nombre_local, direccion_local,latitud_local,longitud_local, telefono_local, celular_local, email_local,img_local);
                 Evento objEvento = new Evento(id, nombre, descripcion, direccion,latitud_evento,longitud_evento, fecha_inicio, fecha_fin, familiar, img, local, categorias);
                 lstEventos.add(objEvento);
             }

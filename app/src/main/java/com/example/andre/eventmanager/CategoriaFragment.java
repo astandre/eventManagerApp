@@ -1,11 +1,13 @@
 package com.example.andre.eventmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.andre.eventmanager.model.Categoria;
 
 
 public class CategoriaFragment extends Fragment {
@@ -33,7 +37,7 @@ public class CategoriaFragment extends Fragment {
         public TextView name;
         private RelativeLayout list_container;
 
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
+        public  ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.fragment_categoria_list, parent, false));
             icon_categoria = (ImageView) itemView.findViewById(R.id.list_icon);
             name = (TextView) itemView.findViewById(R.id.list_title);
@@ -41,11 +45,10 @@ public class CategoriaFragment extends Fragment {
             list_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), "TAP", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getContext(), EventActivity.class);
-//                    intent.putExtra("Evento", lstEventos.get(getPosition()));
-//                    getContext().startActivity(intent);
-//                    Log.d("FNC", "Opening new Event");
+                    Intent intent = new Intent(v.getContext(), EventoCategoriaActivity.class);
+                    intent.putExtra("cod_categoria",getPosition());
+                    v.getContext().startActivity(intent);
+                    Log.d("FNC", "Opening new Event");
                 }
             });
 
@@ -71,10 +74,11 @@ public class CategoriaFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-            holder.name.setText(categorias[position % categorias.length]);
+            holder.name.setText(categorias[position]);
             Tools.determinarCategoria(position+1, holder.icon_categoria);
+
         }
 
         @Override

@@ -13,12 +13,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.example.andre.eventmanager.model.Evento;
+import com.example.andre.eventmanager.model.Local;
+import com.example.andre.eventmanager.parsers.LocalParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MainAcivity extends AppCompatActivity {
@@ -26,7 +37,9 @@ public class MainAcivity extends AppCompatActivity {
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<Evento> lstEventos = new ArrayList<>();
+    ArrayList<Local> lstLocales = new ArrayList<>();
     public String url;
+    public String urlLocales;
     private static SwipeRefreshLayout swiperefresh;
 
     @Override
@@ -37,18 +50,12 @@ public class MainAcivity extends AppCompatActivity {
 
 //        TODO onclick categoria
 //        url
-        url = "http://" + Constants.BASE_URL + "/api/events/";
+        url = "http://" + Constants.BASE_URL + "/api/eventos/";
+        urlLocales = "http://" + Constants.BASE_URL + "/api/locales/";
         lstEventos = (ArrayList<Evento>) getIntent().getSerializableExtra("lstEventos");
         //Tool bar
         // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Setting ViewPager for each Tabs
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        // Set Tabs inside Toolbar
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+
 
 //        createEvents();
 //        swiperefresh = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
@@ -60,30 +67,39 @@ public class MainAcivity extends AppCompatActivity {
 
         // This method performs the actual data-refresh operation.
         // The method calls setRefreshing(false) when it's finished.
-//                        try {
+        try {
+
+//                            run();
+//                            obtener locales desde el api
+            getLocales();
 //
-////                            run();
-////
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+//
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //                    }
 //                }
 //        );
     }
 
     // Add Fragments to Tabs
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager,  ArrayList<Evento> lstEventos,  ArrayList<Local> lstLocales) {
+// Preparando el adaptador
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+// Para los cards de Eventos
         Bundle bundle = new Bundle();
-
         bundle.putSerializable("lstEventos", lstEventos);
-// set Fragmentclass Arguments
         CardEventosFragment objFragCards = new CardEventosFragment();
         objFragCards.setArguments(bundle);
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(objFragCards, "Eventos Proximos");
+        adapter.addFragment(objFragCards, "Eventos");
+//Para los cards de Locales
+        Bundle bundle2 = new Bundle();
+        bundle2.putSerializable("lstLocales", lstLocales);
+        CardLocalesFragment objFragCardsLocal = new CardLocalesFragment();
+        objFragCardsLocal.setArguments(bundle2);
+        adapter.addFragment(objFragCardsLocal, "Locales");
+//        Para las categorias
         adapter.addFragment(new CategoriaFragment(), "Categorias");
-//        adapter.addFragment(new TileContentFragment(), "Tile");
         viewPager.setAdapter(adapter);
     }
 
@@ -138,6 +154,50 @@ public class MainAcivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void getLocales() throws IOException {
+        Log.d("FNC", "Attempting to get data");
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(urlLocales)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(MainAcivity.this, Constants.ERROR_CONNECTION, Toast.LENGTH_SHORT);
+                swiperefresh.setRefreshing(false);
+                call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String myResponse = response.body().string();
+
+                MainAcivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("FNC", "Succes getting data");
+                        lstLocales.clear();
+                        lstLocales = LocalParser.orderingLocales(myResponse);
+//                        Necesario para el toolbar
+                        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                        setSupportActionBar(toolbar);
+                        // Setting ViewPager for each Tabs
+                        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+                        setupViewPager(viewPager,lstEventos,lstLocales);
+                        // Set Tabs inside Toolbar
+                        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+                        tabs.setupWithViewPager(viewPager);
+//                        swiperefresh.setRefreshing(false);
+
+                    }
+                });
+
+            }
+        });
+    }
 
 //    void run() throws IOException {
 //        Log.d("FNC","Attempting to get data");
@@ -175,106 +235,4 @@ public class MainAcivity extends AppCompatActivity {
 //        });
 //    }
 
-//    public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsViewHolder> {
-//        private List<Evento> lstEventos;
-//
-//        public class EventsViewHolder extends RecyclerView.ViewHolder {
-//            // Campos respectivos de un item
-//            private TextView nombre;
-//            private TextView fecha;
-//            private TextView local;
-//            //            TODO add categorias
-////            TODO add family
-//            private ImageView imagen;
-//            private ImageView familiar;
-//            private ImageView category1;
-//            private ImageView category2;
-//            private ImageView category3;
-//            private RelativeLayout container_event;
-//            private EventsViewHolder(View v) {
-//                super(v);
-//                nombre = (TextView) v.findViewById(R.id.nombre_event);
-//                fecha = (TextView) v.findViewById(R.id.fecha_event);
-//                local = (TextView) v.findViewById(R.id.local_event);
-//                imagen = (ImageView) v.findViewById(R.id.imagen_event);
-//                familiar = (ImageView) v.findViewById(R.id.family_event);
-//                category1 = (ImageView) v.findViewById(R.id.category1);
-//                category2 = (ImageView) v.findViewById(R.id.category2);
-//                category3 = (ImageView) v.findViewById(R.id.category3);
-//                container_event = (RelativeLayout) v.findViewById(R.id.container_event);
-//                container_event.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(itemView.getContext(), lstEventos.get(getPosition()).getNombre(), Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(MainAcivity.this, EventActivity.class);
-//                        intent.putExtra("Evento", lstEventos.get(getPosition()));
-//                        MainAcivity.this.startActivity(intent);
-//                        Log.d("FNC", "Opening new Event");
-//                    }
-//                });
-//            }
-//
-//
-//        }
-////        public void setClickListener(ClickListener clickListener){
-////            this.clicklistener = clickListener;
-////        }
-//
-//        public EventsAdapter(List<Evento> lstEventos) {
-//            this.lstEventos = lstEventos;
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return lstEventos.size();
-//        }
-//
-//        @Override
-//        public EventsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//            View v = LayoutInflater.from(viewGroup.getContext())
-//                    .inflate(R.layout.item_event, viewGroup, false);
-//            return new EventsViewHolder(v);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(EventsViewHolder viewHolder, int i) {
-//            Picasso.get().load(lstEventos.get(i).getImg())
-//                    .resize(400, 210)
-//                    .error(R.drawable.errorloading)
-//                    .into(viewHolder.imagen);
-//            viewHolder.nombre.setText(lstEventos.get(i).getNombre());
-//            viewHolder.fecha.setText(new SimpleDateFormat("E, dd MMM '-' HH:mm a",
-//                    new Locale("es", "ES"))
-//                    .format(lstEventos.get(i).getFecha_inicio())
-//                    .toUpperCase()
-//                    .replace(".", ""));
-//            viewHolder.local.setText(lstEventos.get(i).getLocal().getNombre());
-////            Amigable para la familia
-//            if ((lstEventos.get(i).getFamiliar())) {
-//                viewHolder.familiar.setImageResource(R.drawable.family);
-//            } else {
-//                viewHolder.familiar.setImageResource(R.drawable.nofamily);
-//            }
-////Categorias
-//            int[]  categorias = lstEventos.get(i).getCategorias().clone() ;
-//           Tools.determinarCategoria(categorias[0],viewHolder.category1);
-//           Tools.determinarCategoria(categorias[1],viewHolder.category2);
-//           Tools.determinarCategoria(categorias[2],viewHolder.category3);
-//
-//        }
-//    }
-
-//private void createEvents(){
-//    // Obtener el Recycler
-//    recycler = (RecyclerView) findViewById(R.id.reciclador);
-//    recycler.setHasFixedSize(true);
-//
-//// Usar un administrador para LinearLayout
-//    lManager = new LinearLayoutManager(this);
-//    recycler.setLayoutManager(lManager);
-//
-//// Crear un nuevo adaptador
-//    adapter = new EventsAdapter(lstEventos);
-//    recycler.setAdapter(adapter);
-//}
 }

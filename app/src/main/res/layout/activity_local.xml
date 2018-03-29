@@ -34,7 +34,8 @@
             android:layout_height="50dp"
             android:id="@+id/info_local"
             android:layout_below="@+id/imagen_local"
-            android:paddingTop="1dp">
+            android:paddingTop="1dp"
+            >
             <ImageView
                 android:id="@+id/icon1"
                 android:layout_width="50dp"
@@ -57,34 +58,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/info_local_2"
-            android:layout_below="@+id/info_local">
-            <ImageView
-                android:id="@+id/icon_local_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/avatar"
-                android:scaleType="center"
-                />
-
-            <TextView
-                android:id="@+id/nombre_propietario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/icon_local_2"
-                android:paddingLeft="5dp"
-                android:text="Pedro PicaPiedra"
-                android:textAppearance="?android:attr/textAppearance"
-
-                />
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/info_local_3"
-            android:layout_below="@+id/info_local_2">
+            android:layout_below="@+id/info_local">
             <ImageView
                 android:id="@+id/icon_local_3"
                 android:layout_width="50dp"

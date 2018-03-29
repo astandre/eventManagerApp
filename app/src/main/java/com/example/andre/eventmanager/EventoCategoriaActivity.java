@@ -1,12 +1,8 @@
 package com.example.andre.eventmanager;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,41 +15,95 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andre.eventmanager.model.Evento;
+import com.example.andre.eventmanager.parsers.EventParser;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
-public class CardEventosFragment extends Fragment {
-
-    private List<Evento> lstAuxEventos;
-
-
-    //   public CardEventosFragment(List<Evento> lstAuxEventos){
-//
-//   }
+public class EventoCategoriaActivity extends AppCompatActivity {
+String url;
+    ArrayList<Evento> lstEventos = new ArrayList<>();
+    private static RecyclerView recycler;
+    private static RecyclerView.Adapter adapter;
+    private  RecyclerView.LayoutManager lManager;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view, container, false);
-        lstAuxEventos = (ArrayList<Evento>) getArguments().getSerializable("lstEventos");
-//        getActivity().getApplicationContext();
-//        Log.d("test", String.valueOf(lstAuxEventos.size()));
-//        Log.d("pos",lstAuxEventos.get(0).getNombre());
-//        ContentAdapter adapter = new ContentAdapter(lstAuxEventos);
-//        ContentAdapter adapter = new ContentAdapter(lstAuxEventos);
-        EventsAdapter adapter = new EventsAdapter(lstAuxEventos);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_evento_categoria);
+        int cod  = getIntent().getIntExtra("cod_categoria",0);
+        cod = cod +1;
+        Log.d("test",String.valueOf(cod));
+//        Log.d("test",cod);
+        url ="http://" + Constants.BASE_URL +"/api/evento/categoria/"+cod;
 
-        return recyclerView;
+        try {
+
+                            run();
+//                            obtener locales desde el api
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    void run() throws IOException {
+        Log.d("FNC","Attempting to get data");
+        OkHttpClient client = new OkHttpClient();
 
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+//        Content-Type: application/json
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(EventoCategoriaActivity.this,Constants.ERROR_CONNECTION,Toast.LENGTH_SHORT);
+//                swiperefresh.setRefreshing(false);
+                call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                final String myResponse = response.body().string();
+
+                EventoCategoriaActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("FNC","Succes getting data");
+                        try {
+                            JSONArray dataJSON = new JSONArray(myResponse);
+                            if(dataJSON.length()==0){
+                                Toast.makeText(EventoCategoriaActivity.this, Constants.ERROR_CATEGORIA_NOT_FOUND, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else {
+                                lstEventos.clear();
+                                lstEventos = EventParser.orderingEvents(myResponse);
+                                createEvents();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+            }
+        });
+    }
     public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsViewHolder> {
         private List<Evento> lstEventos;
 
@@ -84,9 +134,9 @@ public class CardEventosFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(itemView.getContext(), lstEventos.get(getPosition()).getNombre(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(), EventActivity.class);
+                        Intent intent = new Intent(v.getContext(), EventActivity.class);
                         intent.putExtra("Evento", lstEventos.get(getPosition()));
-                        getContext().startActivity(intent);
+                        v.getContext().startActivity(intent);
                         Log.d("FNC", "Opening new Event");
                     }
                 });
@@ -140,5 +190,18 @@ public class CardEventosFragment extends Fragment {
         }
     }
 
+    private void createEvents() {
+        // Obtener el Recycler
+        recycler = (RecyclerView) findViewById(R.id.evento_categoria_reciclador);
+        recycler.setHasFixedSize(true);
 
-}
+        // Usar un administrador para LinearLayout
+        lManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(lManager);
+
+        // Crear un nuevo adaptador
+        adapter = new EventsAdapter(lstEventos);
+        recycler.setAdapter(adapter);
+    }
+
+    }

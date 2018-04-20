@@ -46,7 +46,7 @@ public class CategoriaFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), EventoCategoriaActivity.class);
-                    intent.putExtra("cod_categoria",getPosition());
+                    intent.putExtra("cod_categoria",Tools.determinarCategoriaChar(getPosition()));
                     v.getContext().startActivity(intent);
                     Log.d("FNC", "Opening new Event");
                 }
@@ -59,12 +59,13 @@ public class CategoriaFragment extends Fragment {
      */
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
         // Set numbers of List in RecyclerView.
-        private static final int LENGTH = 5;
+        private static  int LENGTH=0;
         private final String[] categorias;
 
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
             categorias = resources.getStringArray(R.array.categorias);
+            LENGTH = categorias.length;
 
         }
 
@@ -77,7 +78,7 @@ public class CategoriaFragment extends Fragment {
         public void onBindViewHolder(final ViewHolder holder, final int position) {
 
             holder.name.setText(categorias[position]);
-            Tools.determinarCategoria(position+1, holder.icon_categoria);
+            Tools.determinarCategoria(Tools.determinarCategoriaChar(position), holder.icon_categoria);
 
         }
 

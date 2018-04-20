@@ -34,32 +34,34 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class EventoCategoriaActivity extends AppCompatActivity {
-String url;
+    String url;
     ArrayList<Evento> lstEventos = new ArrayList<>();
     private static RecyclerView recycler;
     private static RecyclerView.Adapter adapter;
-    private  RecyclerView.LayoutManager lManager;
+    private RecyclerView.LayoutManager lManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento_categoria);
-        int cod  = getIntent().getIntExtra("cod_categoria",0);
-        cod = cod +1;
-        Log.d("test",String.valueOf(cod));
+        char cod = getIntent().getCharExtra("cod_categoria", 'F');
+//        cod = cod + 1;
+        Log.d("test", String.valueOf(cod));
 //        Log.d("test",cod);
-        url ="http://" + Constants.BASE_URL +"/api/evento/categoria/"+cod;
+        url = "http://" + Constants.BASE_URL + "/api/evento/categoria/" + cod;
 
         try {
 
-                            run();
+            run();
 //                            obtener locales desde el api
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     void run() throws IOException {
-        Log.d("FNC","Attempting to get data");
+        Log.d("FNC", "Attempting to get data");
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -70,7 +72,7 @@ String url;
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(EventoCategoriaActivity.this,Constants.ERROR_CONNECTION,Toast.LENGTH_SHORT);
+                Toast.makeText(EventoCategoriaActivity.this, Constants.ERROR_CONNECTION, Toast.LENGTH_SHORT);
 //                swiperefresh.setRefreshing(false);
                 call.cancel();
             }
@@ -83,13 +85,13 @@ String url;
                 EventoCategoriaActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("FNC","Succes getting data");
+                        Log.d("FNC", "Succes getting data");
                         try {
                             JSONArray dataJSON = new JSONArray(myResponse);
-                            if(dataJSON.length()==0){
+                            if (dataJSON.length() == 0) {
                                 Toast.makeText(EventoCategoriaActivity.this, Constants.ERROR_CATEGORIA_NOT_FOUND, Toast.LENGTH_SHORT).show();
                                 finish();
-                            }else {
+                            } else {
                                 lstEventos.clear();
                                 lstEventos = EventParser.orderingEvents(myResponse);
                                 createEvents();
@@ -104,6 +106,7 @@ String url;
             }
         });
     }
+
     public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsViewHolder> {
         private List<Evento> lstEventos;
 
@@ -182,10 +185,10 @@ String url;
                 viewHolder.familiar.setImageResource(R.drawable.nofamily);
             }
 //Categorias
-            int[] categorias = lstEventos.get(i).getCategorias().clone();
-            Tools.determinarCategoria(categorias[0], viewHolder.category1);
-            Tools.determinarCategoria(categorias[1], viewHolder.category2);
-            Tools.determinarCategoria(categorias[2], viewHolder.category3);
+            char categorias = lstEventos.get(i).getCategorias();
+            Tools.determinarCategoria(categorias, viewHolder.category1);
+//            Tools.determinarCategoria(categorias[1], viewHolder.category2);
+//            Tools.determinarCategoria(categorias[2], viewHolder.category3);
 
         }
     }
@@ -204,4 +207,4 @@ String url;
         recycler.setAdapter(adapter);
     }
 
-    }
+}

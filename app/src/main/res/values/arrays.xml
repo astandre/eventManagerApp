@@ -2,10 +2,11 @@
 <resources>
     <string-array name="categorias">
         <item>Musica</item>
-        <item>Arte</item>
+        <item>Teatro</item>
         <item>Gaming</item>
         <item>Politica</item>
         <item>Deportes</item>
+        <item>Farras</item>
     </string-array>
 
 

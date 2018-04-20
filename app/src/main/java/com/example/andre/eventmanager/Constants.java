@@ -21,7 +21,7 @@ public class Constants {
     public @interface ServiceName {
     }
 
-    public static final String BASE_URL = "192.168.1.3:8000";
+    public static final String BASE_URL = "192.168.3.118:8000";
     public static final String ERROR_CONNECTION = "Error de conexion";
     public static final String ERROR_CATEGORIA_NOT_FOUND = "No existen eventos dentro de la categoria";
 }

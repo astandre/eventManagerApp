@@ -132,10 +132,10 @@ public class CardEventosFragment extends Fragment {
                 viewHolder.familiar.setImageResource(R.drawable.nofamily);
             }
 //Categorias
-            int[] categorias = lstEventos.get(i).getCategorias().clone();
-            Tools.determinarCategoria(categorias[0], viewHolder.category1);
-            Tools.determinarCategoria(categorias[1], viewHolder.category2);
-            Tools.determinarCategoria(categorias[2], viewHolder.category3);
+            char categoria = lstEventos.get(i).getCategorias();
+            Tools.determinarCategoria(categoria, viewHolder.category1);
+//            Tools.determinarCategoria(categorias[1], viewHolder.category2);
+//            Tools.determinarCategoria(categorias[2], viewHolder.category3);
 
         }
     }

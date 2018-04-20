@@ -43,11 +43,7 @@ public class EventParser {
                 Date fecha_fin = formatDate.parse(auxDate);
                 Boolean familiar = Boolean.valueOf(evento.getString("familiar"));
                 String img = evento.getString("img");
-                JSONArray aux = evento.getJSONArray("categorias_eventos");
-                int[] categorias = new int[aux.length()];
-                for (int j = 0; j < aux.length(); j++) {
-                    categorias[j] = (Integer.parseInt(aux.get(j).toString()));
-                }
+                char categorias = evento.getString("nombre_categoria").charAt(0);
                 JSONObject localAux = new JSONObject(evento.getString("local"));
                 int cod_local = Integer.parseInt(localAux.getString("cod_local"));
                 String nombre_local = localAux.getString("nombre_local");

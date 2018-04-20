@@ -26,7 +26,7 @@ public class Evento implements Serializable/*,Parcelable*/{
     private Boolean familiar;
     private String img;
     private Local local;
-    private int[] categorias;
+    private char categoria;
 
     public Evento(){
 
@@ -94,7 +94,7 @@ public class Evento implements Serializable/*,Parcelable*/{
 //        }
 //    };
 
-    public Evento(int cod_evento, String nombre, String descripcion,String direccion, String latitud_evento,String longitud_evento, Date fecha_inicio, Date fecha_fin  , Boolean familiar, String img, Local local,int[] categorias) {
+    public Evento(int cod_evento, String nombre, String descripcion,String direccion, String latitud_evento,String longitud_evento, Date fecha_inicio, Date fecha_fin  , Boolean familiar, String img, Local local,char categoria) {
         super();
         this.cod_evento = cod_evento;
         this.nombre = nombre;
@@ -107,7 +107,7 @@ public class Evento implements Serializable/*,Parcelable*/{
         this.familiar = familiar;
         this.img = img;
         this.local=local;
-        this.categorias = categorias;
+        this.categoria = categoria;
     }
 
 
@@ -185,5 +185,5 @@ public class Evento implements Serializable/*,Parcelable*/{
         this.local = local;
     }
 
-    public int[] getCategorias() { return categorias; }
+    public char getCategorias() { return categoria; }
 }
